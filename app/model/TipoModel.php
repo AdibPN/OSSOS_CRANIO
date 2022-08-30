@@ -1,17 +1,17 @@
 <?php
 
-class MembroModel
+class TipoModel
 {
-    public $id, $nome, $partes;
+    public $id, $nome;
 
     public $rows;
 
     public function save() 
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'dao/TipoDao.php'; // Incluíndo o arquivo DAO
 
         // Instância do objeto e conexão no banco de dados via construtor
-        $dao = new MembroDao(); 
+        $dao = new TipoDao(); 
 
         // Verificando se a propriedade id foi preenchida no model
         // Para saber mais sobre a palavra-chave this, leia: https://pt.stackoverflow.com/questions/575/quando-usar-self-vs-this-em-php
@@ -33,10 +33,10 @@ class MembroModel
      */
     public function getAllRows()
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'dao/TipoDao.php'; // Incluíndo o arquivo DAO
         
         // Instância do objeto e conexão no banco de dados via construtor
-        $dao = new MembroDao();
+        $dao = new TipoDao();
 
         // Abastecimento da propriedade $rows com as "linhas" vindas do MySQL
         // via camada DAO.
@@ -50,15 +50,21 @@ class MembroModel
      */
     public function getById(int $id)
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'dao/TipoDao.php'; // Incluíndo o arquivo DAO
 
-        $dao = new MembroDao();
+        $dao = new TipoDao();
 
         $obj = $dao->selectById($id); // Obtendo um model preenchido da camada DAO
 
         // Para saber mais operador ternário, leia: https://pt.stackoverflow.com/questions/56812/uso-de-e-em-php
-        return ($obj) ? $obj : new MembroModel(); // Operador Ternário
+        return ($obj) ? $obj : new TipoModel(); // Operador Ternário
 
+        /*if($obj)
+        {
+            return  $obj;
+        } else {
+            return new PessoaModel();
+        }*/
     }
 
      /**
@@ -68,12 +74,13 @@ class MembroModel
      */
     public function delete(int $id)
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'dao/TipoDao.php'; // Incluíndo o arquivo DAO
 
-        $dao = new MembroDao();
+        $dao = new TipoDao();
 
         $dao->delete($id);
     }
 
 
 }
+

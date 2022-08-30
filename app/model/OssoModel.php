@@ -1,17 +1,16 @@
 <?php
 
-class MembroModel
+class OssoModel
 {
-    public $id, $nome, $partes;
-
-    public $rows;
+    public $id, $funcao, $nome;
 
     public function save() 
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'dao/OssoDao.php'; // Incluíndo o arquivo DAO
 
         // Instância do objeto e conexão no banco de dados via construtor
-        $dao = new MembroDao(); 
+        $dao = new OssoDao(); 
+        var_dump($this);
 
         // Verificando se a propriedade id foi preenchida no model
         // Para saber mais sobre a palavra-chave this, leia: https://pt.stackoverflow.com/questions/575/quando-usar-self-vs-this-em-php
@@ -20,9 +19,10 @@ class MembroModel
             // Chamando o método insert que recebe o próprio objeto model
             // já preenchido
             $dao->insert($this);
-        } else {
+
+        }else {
             $dao->update($this); // Como existe um id, passando o model para ser atualizado.
-        }          
+        }  
     }
 
 
@@ -33,47 +33,35 @@ class MembroModel
      */
     public function getAllRows()
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'Dao/OssoDao.php'; // Incluíndo o arquivo DAO
         
         // Instância do objeto e conexão no banco de dados via construtor
-        $dao = new MembroDao();
+        $dao = new OssoDao();
 
         // Abastecimento da propriedade $rows com as "linhas" vindas do MySQL
         // via camada DAO.
         $this->rows = $dao->select();
     }
 
-     /**
-     * Método que encapsula o acesso ao método selectById da camada DAO
-     * O método recebe um parâmetro do tipo inteiro que é o id do registro
-     * a ser recuperado do MySQL, via camada DAO.
-     */
-    public function getById(int $id)
+    public function GetById(int $id)
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'Dao/OssoDao.php'; // Incluíndo o arquivo DAO
+        
+        // Instância do objeto e conexão no banco de dados via construtor
+        $dao = new OssoDao();
 
-        $dao = new MembroDao();
+        $obj = $dao->selectById($id);
 
-        $obj = $dao->selectById($id); // Obtendo um model preenchido da camada DAO
-
-        // Para saber mais operador ternário, leia: https://pt.stackoverflow.com/questions/56812/uso-de-e-em-php
-        return ($obj) ? $obj : new MembroModel(); // Operador Ternário
-
+        return($obj) ? $obj : new OssoModel;
     }
 
-     /**
-     * Método que encapsula o acesso a DAO do método delete.
-     * O método recebe um parâmetro do tipo inteiro que é o id do registro
-     * que será excluido da tabela no MySQL, via camada DAO.
-     */
     public function delete(int $id)
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        include 'dao/OssoDao.php';
 
-        $dao = new MembroDao();
+        $dao = new OssoDao();
 
         $dao->delete($id);
     }
-
 
 }

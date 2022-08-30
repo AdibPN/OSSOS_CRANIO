@@ -1,79 +1,68 @@
 <?php
 
-class MembroModel
+class MembroDAO
 {
-    public $id, $nome, $partes;
+    private $conexao;
 
-    public $rows;
-
-    public function save() 
+    public function __construct()
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        $dsn = "mysql:host=localhost:3307;dbname=album_anatomico";
 
-        // Instância do objeto e conexão no banco de dados via construtor
-        $dao = new MembroDao(); 
-
-        // Verificando se a propriedade id foi preenchida no model
-        // Para saber mais sobre a palavra-chave this, leia: https://pt.stackoverflow.com/questions/575/quando-usar-self-vs-this-em-php
-        if(empty($this->id))
-        {
-            // Chamando o método insert que recebe o próprio objeto model
-            // já preenchido
-            $dao->insert($this);
-        } else {
-            $dao->update($this); // Como existe um id, passando o model para ser atualizado.
-        }          
+        $this->conexao = new PDO($dsn, 'root', 'etecjau');
     }
 
-
-    /**
-     * Método que encapsula a chamada a DAO e que abastecerá a propriedade rows;
-     * Esse método é importante pois como a model é "vista" na View a propriedade
-     * $rows será acessada e possibilitará listar os registros vindos do banco de dados
-     */
-    public function getAllRows()
+    public function insert(MembroModel $model)
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
-        
-        // Instância do objeto e conexão no banco de dados via construtor
-        $dao = new MembroDao();
+        $sql = "INSERT INTO Membro (nome, partes) VALUES (?, ?) ";
 
-        // Abastecimento da propriedade $rows com as "linhas" vindas do MySQL
-        // via camada DAO.
-        $this->rows = $dao->select();
+        $stmt = $this->conexao->prepare($sql);
+
+        $stmt->bindValue(1, $model->nome);
+        $stmt->bindValue(2, $model->partes);
+
+        $stmt->execute();
     }
 
-     /**
-     * Método que encapsula o acesso ao método selectById da camada DAO
-     * O método recebe um parâmetro do tipo inteiro que é o id do registro
-     * a ser recuperado do MySQL, via camada DAO.
-     */
-    public function getById(int $id)
+    public function update(MembroModel $model)
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        $sql = "UPDATE MembroModel SET nome=?, partes=? WHERE id=? ";
 
-        $dao = new MembroDao();
-
-        $obj = $dao->selectById($id); // Obtendo um model preenchido da camada DAO
-
-        // Para saber mais operador ternário, leia: https://pt.stackoverflow.com/questions/56812/uso-de-e-em-php
-        return ($obj) ? $obj : new MembroModel(); // Operador Ternário
-
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $model->nome);
+        $stmt->bindValue(2, $model->partes);
+        $stmt->bindValue(3, $model->id);
+        $stmt->execute();
     }
 
-     /**
-     * Método que encapsula o acesso a DAO do método delete.
-     * O método recebe um parâmetro do tipo inteiro que é o id do registro
-     * que será excluido da tabela no MySQL, via camada DAO.
-     */
+    public function select()
+    {
+        $sql = "SELECT id, nome, partes FROM Membro ";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_CLASS);        
+    }
+
+    public function selectById(int $id)
+    {
+        include_once 'model/MembroModel.php';
+
+        $sql = "SELECT id, nome, partes FROM Membro WHERE id = ?";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        return $stmt->fetchObject("Membro");
+    }
+
     public function delete(int $id)
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        $sql = "DELETE FROM Membro WHERE id = ? ";
 
-        $dao = new MembroDao();
-
-        $dao->delete($id);
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
     }
-
-
 }
