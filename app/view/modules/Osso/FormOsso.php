@@ -27,11 +27,11 @@
         <form action="/Osso/save" method="post" class="form-osso">
             <input type="hidden" value="<?= $model->id ?>" name="id" />
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Função</label>
+                <label for="exampleFormControlInput1" class="form-label">Função:</label>
                 <input name="funcao" id="funcao" type="text" value="<?= $model->funcao ?>" class="form-control" id="exampleFormControlInput1" >
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Função</label>
+                <label for="exampleFormControlInput1" class="form-label">Nome:</label>
                 <input name="nome" id="nome" type="text" value="<?= $model->nome ?>" class="form-control" id="exampleFormControlInput1" >
             </div>
             <div class="mb-3">

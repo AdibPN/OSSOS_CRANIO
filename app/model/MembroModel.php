@@ -1,4 +1,9 @@
 <?php
+namespace APP\model;
+
+
+use APP\dao\MembroDao;
+
 
 class MembroModel
 {
@@ -8,14 +13,14 @@ class MembroModel
 
     public function save() 
     {
-        include 'dao/MembroDao.php'; // Incluíndo o arquivo DAO
+        
 
         // Instância do objeto e conexão no banco de dados via construtor
         $dao = new MembroDao(); 
 
         // Verificando se a propriedade id foi preenchida no model
         // Para saber mais sobre a palavra-chave this, leia: https://pt.stackoverflow.com/questions/575/quando-usar-self-vs-this-em-php
-        if(empty($this->id))
+        if($this->id)
         {
             // Chamando o método insert que recebe o próprio objeto model
             // já preenchido

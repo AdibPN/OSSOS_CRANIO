@@ -1,5 +1,11 @@
 <?php
 
+
+namespace App\DAO;
+
+use APP\model\MEmbroModel;
+use \PDO;
+
 class MembroDAO
 {
     private $conexao;
@@ -7,8 +13,10 @@ class MembroDAO
     public function __construct()
     {
         $dsn = "mysql:host=localhost:3307;dbname=album_anatomico";
+        $user = "root";
+        $pass = "etecjau";
 
-        $this->conexao = new PDO($dsn, 'root', 'etecjau');
+        $this->conexao = new PDO($dsn, $user, $pass);
     }
 
     public function insert(MembroModel $model)
@@ -25,7 +33,7 @@ class MembroDAO
 
     public function update(MembroModel $model)
     {
-        $sql = "UPDATE MembroModel SET nome=?, partes=? WHERE id=? ";
+        $sql = "UPDATE Membro SET nome=?, partes=? WHERE id=? ";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(1, $model->nome);
@@ -36,7 +44,7 @@ class MembroDAO
 
     public function select()
     {
-        $sql = "SELECT id, nome, partes FROM Membro ";
+        $sql = "SELECT * FROM Membro ";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
@@ -48,13 +56,13 @@ class MembroDAO
     {
         include_once 'model/MembroModel.php';
 
-        $sql = "SELECT id, nome, partes FROM Membro WHERE id = ?";
+        $sql = "SELECT * FROM Membro WHERE id = ?";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindValue(1, $id);
         $stmt->execute();
 
-        return $stmt->fetchObject("Membro");
+        return $stmt->fetchObject("MembroModel");
     }
 
     public function delete(int $id)

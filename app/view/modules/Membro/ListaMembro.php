@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php include 'view/includes/css_config.php'?>
     <title>Membros</title>
 </head>
 <body>
 
-    <table>
+<div class="container">
+    <table class="table">
         <tr>
             <th></th>
             <th>Id</th>
@@ -40,6 +42,8 @@
         <?php endif ?>
 
     </table>
+    </div>
     
+    <?php include 'view/includes/js_config.php'?>
 </body>
 </html>

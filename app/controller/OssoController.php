@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Crianco a classe e as funçoes
- */
+
 class OssoController 
 {
-    /**
-     * 
-     */
+    
 
     public static function index() 
     {
@@ -43,7 +39,7 @@ class OssoController
 
         $Osso->save();
 
-        header("location: /Osso"); //redirecionando o usuario para outra rota
+        header("location: /Osso"); 
     }
 
     public static function delete()
@@ -52,7 +48,7 @@ class OssoController
 
         $model = new OssoModel();
 
-        $model->delete( (int) $_GET['id'] ); //enviando a variável $_GET como inteiro para o método delete
+        $model->delete( (int) $_GET['id'] ); 
 
         header("Location: /Osso");
     
