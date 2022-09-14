@@ -1,11 +1,6 @@
 <?php
 
 
-namespace App\DAO;
-
-use APP\model\MEmbroModel;
-use \PDO;
-
 class MembroDAO
 {
     private $conexao;
@@ -21,7 +16,7 @@ class MembroDAO
 
     public function insert(MembroModel $model)
     {
-        $sql = "INSERT INTO Membro (nome, partes) VALUES (?, ?) ";
+        $sql = "INSERT INTO Membro (nome, partes) VALUES (?, ?, 1) ";
 
         $stmt = $this->conexao->prepare($sql);
 

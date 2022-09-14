@@ -1,9 +1,4 @@
 <?php
-namespace APP\model;
-
-
-use APP\dao\MembroDao;
-
 
 class MembroModel
 {
@@ -14,7 +9,7 @@ class MembroModel
     public function save() 
     {
         
-
+        include 'dao/MembroDao.php';
         // Instância do objeto e conexão no banco de dados via construtor
         $dao = new MembroDao(); 
 

@@ -1,9 +1,4 @@
 <?php
-namespace APP\controller;
-
-
-
-use APP\model\MembroModel;
 
 
 class MembroController 
@@ -11,7 +6,7 @@ class MembroController
    
     public static function index() 
     {
-        
+        include 'model/MembroModel.php';
 
         $model = new MembroModel();
         $model->getAllRows();
@@ -22,7 +17,8 @@ class MembroController
    
     public static function form()
     {
-        
+        include 'model/MembroModel.php';
+
         $model = new MembroModel();
 
         if(isset($_GET['id'])) 
@@ -34,7 +30,7 @@ class MembroController
    
     public static function save() {
 
-      
+      include 'model/MembroModel.php';
 
         $Membro = new MembroModel();
         $Membro->id = $_POST['id'];
@@ -42,14 +38,13 @@ class MembroController
         $Membro->partes = $_POST['partes'];
 
         $Membro->save();
-
         header("Location: /Membro"); 
     }
 
 
     public static function delete()
     {
-       
+        include 'model/MembroModel.php';
 
         $model = new MembroModel();
 
